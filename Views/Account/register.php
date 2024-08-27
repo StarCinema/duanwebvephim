@@ -7,28 +7,32 @@
                     <span class="cate">welcome</span>
                     <h2 class="title">to Boleto </h2>
                 </div>
-                <form class="account-form" action="index.php?act=sign_up" method="post">
+                <form class="account-form" action="index.php?act=register" method="post">
                     <div class="form-group">
                         <label for="email1">Username<span>*</span></label>
                         <input type="text" placeholder="Enter Your Username" name="username">
+                        <?php if(isset($erUsername)) echo "<small class='error-text'>$erUsername</small>"; ?>
                     </div>
                     <div class="form-group">
                         <label for="email1">Name<span>*</span></label>
                         <input type="text" placeholder="Enter Your Name" name="name">
+                        <?php if(isset($ername)) echo "<small class='error-text'>$ername</small>"; ?>
                     </div>
                     <div class="form-group">
                         <label for="email1">Email<span>*</span></label>
                         <input type="email" placeholder="Enter Your Email" name="email">
-
+                        <?php if(isset($erEmail)) echo "<small class='error-text'>$erEmail</small>"; ?>
                     </div>
                     <div class="form-group">
                         <label for="pass2">Phone<span>*</span></label>
                         <input type="number" placeholder="Phone" name="phone">
+                        <?php if(isset($erPhone)) echo "<small class='error-text'>$erPhone</small>"; ?>
                     </div>
                     <div class="form-group">
                         <label for="pass1">Password<span>*</span></label>
                         <input type="password" placeholder="Password" name="password">
-
+                        <?php if(isset($erPassword)) echo "<small class='error-text'>$erPassword</small>"; ?>
+                        <?php if(isset($error)) echo "<small class='error-text'>$error</small>"; ?>
                     </div>
 
                     <div class="form-group text-center">
