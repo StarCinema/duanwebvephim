@@ -7,15 +7,17 @@
                     <span class="cate">hello</span>
                     <h2 class="title">welcome back</h2>
                 </div>
-                <form class="account-form" action="index.php?act=login" method="post">
+                <form class="account-form" action="index.php?act=logIn" method="post">
                     <div class="form-group">
                         <label for="email2">Email<span>*</span></label>
                         <input type="email" placeholder="Nhập địa chỉ email" name="email" id="email2" value="">
+                        <?php if(isset($erEmail)) echo "<small class='error-text'>$erEmail</small>"; ?>
                     </div>
                     <div class="form-group">
                         <label for="pass3">Password<span>*</span></label>
                         <input type="password" placeholder="Nhập mật khẩu" name="password" id="pass3" value="">
-                    
+                        <?php if(isset($erPassword)) echo "<small class='error-text'>$erPassword</small>"; ?>
+                        <?php if(isset($error)) echo "<small class='error-text'>$error</small>"; ?>
                     </div>
                     <div class="form-group checkgroup">
                         <a href="index.php?act=forgot_password" class="forget-pass">Quên mật khẩu?</a>

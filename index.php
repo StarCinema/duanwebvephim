@@ -65,10 +65,53 @@ if (isset($_GET['act'])) {
             require_once './Views/Account/register.php';
             break;
         case 'logIn':
+            $error = $erEmail=$erPassword = "";
+            $erCount = 0;
+            if(isset($_POST['btn_login'])){
+                $email = $_POST['email'];
+                $mat_khau = $_POST['password'];
+                #validate
+                if (empty($email)) {
+                    $erEmail = "Không được để trống email";
+                    $erCount++;
+                }
+                if (empty($mat_khau)) {
+                    $erPassword = "Không được để trống password";
+                    $erCount++;
+                }
+                #đăng nhập
+                if ($erCount == 0) {
+                    #check tài khoản
+                    $check =checkAccount2($email);
+                    if($check){
+                        $passwordUser = $check['mat_khau'];
+                        $emailUser = $check['email'];
+                        if (password_verify($mat_khau, $passwordUser)) {
+                            $_SESSION['user'] =  $check;
+                            echo "<script>
+                            alert('Đăng nhập thành công!');
+                            window.location.href = 'index.php?act=home'; 
+                            </script>";
+                            exit();
+                        } else {
+                            $erPassword = "Mật khẩu không chính xác";
+                        }
+                    }else {
+                        $error = "Tài khoản không tồn tại";
+                    }
+                    
+                }
+            }
             require_once './Views/Account/login.php';
             break;
         case 'logOut':
-            # chức năng đăng xuất
+            if (isset($_SESSION['user'])) {
+                unset($_SESSION['user']);
+                echo "<script>
+            window.location.href = 'index.php?act=home'; 
+            </script>";
+                exit();
+            }
             break;
         case 'genre':
             # loại phim

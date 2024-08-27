@@ -83,19 +83,34 @@ $path = 'http://localhost/duanwebvephim';
                         <i class="fa-solid fa-user" style="margin-left: 10px">
                         </i>
                         <ul class="submenu">
-
-                            <li style="margin: inherit; color: #000">Xin chào<b>, quan</b><br>
-                                <a href='logout'>Đăng xuất</a>
+                        <?php
+                            if(isset($_SESSION['user'])){
+                            if ($_SESSION['user']['vai_tro'] == 0){
+                                ?>
+                                <li style="margin: inherit; color: #000">Xin chào<b>,<?php echo $_SESSION['user']['ten_dang_nhap'] ?> </b><br>
+                                <a href='index.php?act=logOut'>Đăng xuất</a>
                             </li>
-
-                            <li>
-                                <a href='dashBoard'>Đăng nhập Admin</a>
+                              <?php
+                            }
+                            if ($_SESSION['user']['vai_tro'] == 1){
+                                ?>
+                                <li style="margin: inherit; color: #000">Xin chào<b>,<?php echo $_SESSION['user']['ten_dang_nhap'] ?> </b><br>
+                                <a href='Views\Admin\index.php'>Đăng nhập Admin</a>
+                                <a href='index.php?act=logOut'>Đăng xuất</a>
+                               
                             </li>
+                              <?php
+                            }
 
-                            <li>
-                                <a href='dashBoard'>Đăng nhập Nhân Viên</a>
+
+                            }else {
+                                ?>
+                                <li style="margin: inherit; color: #000"><b>Tài khoản khách</b><br>
+                              
                             </li>
-
+                              <?php
+                            }
+                            ?> 
                         </ul>
                     </li>
                 </ul>
