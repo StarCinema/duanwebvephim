@@ -28,6 +28,11 @@
                                     <label for="productCategory">Danh mục</label>                                  
                                     <select name="danh_muc" class="form-control" id="productCategory">
                                         <option value="0">Chọn danh mục</option>
+                                        <?php foreach ($listdanhmuc as $key => $dm) {
+                                           ?>
+                                            <option value="<?=$dm['id_danh_muc'] ?>"><?=$dm['ten_danh_muc'] ?></option>
+                                           <?php
+                                        } ?>
                          
                                     </select>
 
@@ -43,7 +48,7 @@
                  
 
                                 <!-- Add Product Button -->
-                                <input type="submit" class="btn btn-primary" name="them_btn" value="Thêm sản phẩm">
+                                <input type="submit" class="btn btn-primary" name="them_btn" value="Thêm ">
                            
                             </form>
                         </div>
