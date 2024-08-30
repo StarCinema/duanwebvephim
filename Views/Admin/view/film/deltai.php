@@ -18,6 +18,12 @@
     .product-image img:hover {
         transform: scale(1.05); 
     }
+    .product-image img {
+    max-width: 100%; /* Đặt chiều rộng tối đa của ảnh bằng chiều rộng của phần tử chứa */
+    height: auto; /* Đảm bảo tỷ lệ khung hình của ảnh được giữ nguyên */
+    display: block; /* Đặt ảnh thành khối để có thể căn chỉnh tốt hơn */
+}
+
 </style>
     </style>
     <!-- Begin Page Content -->
@@ -35,45 +41,41 @@
                     <div class="card-body">
                         <div class="row mb-4">
                             <div class="col-sm-2 font-weight-bold">Tên phim:</div>
-                            <div class="col-sm-10">phim 1</div>
+                            <div class="col-sm-10"><?=$ten_phim?></div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-sm-2 font-weight-bold">Mô tả:</div>
-                            <div class="col-sm-10"> Mô tả phim.
+                            <div class="col-sm-10"> <?=$mo_ta?>
                             </div>
                         </div>
                         <div class="row mb-4">
                             <div class="col-sm-2 font-weight-bold">Thể loại:</div>
-                            <div class="col-sm-10">Hành động</div>
+                            <div class="col-sm-10"><?=$ten_danh_muc?></div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Các suất chiếu</div>
-                            <div class="col-sm-10">Hành động</div>
+                            <div class="col-sm-2 font-weight-bold">Thời lượng</div>
+                            <div class="col-sm-10"><?=$thoi_luong?></div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Các xuất chiếu:</div>
-                            <div class="col-sm-10">Hành động</div>
+                            <div class="col-sm-2 font-weight-bold">Thời gian tạo:</div>
+                            <div class="col-sm-10"><?=$thoi_gian_tao?></div>
                         </div>
-                        <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Thời lượng:</div>
-                            <div class="col-sm-10">Hành động</div>
-                        </div>
+
                          <!-- Column for Product Images -->
     
-                <div class="card  mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Ảnh bìa</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                          
-                                <div class="col-sm-6 mb-3  product-image">
-                                    <img src="../uploads/" class="img-fluid" alt="Ảnh sản phẩm">
-                                </div>
-                   
-                        </div>
-                    </div>
-                </div>
+                         <div class="card mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Ảnh bìa</h6>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 mb-0 product-image"> <!-- Sử dụng col-sm-12 để ảnh chiếm toàn bộ chiều rộng của phần tử chứa -->
+                <img src="../../uploads/<?=$anh_bia?>" class="img-fluid" alt="Ảnh phim">
+            </div>
+        </div>
+    </div>
+</div>
+
          
             <!-- End Column for Product Images -->
 
