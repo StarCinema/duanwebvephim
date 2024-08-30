@@ -6,9 +6,20 @@ $check = pdo_query($sql);
 return $check;
 }
 #thêm phòng
-function insertRoom($ten_phong,$suc_chua,$trang_thai){
-    $sql = "INSERT INTO phongchieu(ten_phong,suc_chua,trang_thai) VALUES('$ten_phong','$suc_chua','$trang_thai')";
+function insertRoom($ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang,$trangthai){
+    $sql = "INSERT INTO phongchieu(ten_phong,tong_so_ghe,so_hang,so_ghe_moi_hang,trang_thai) VALUES('$ten_phong','$tong_so_ghe','$so_hang','$so_ghe_moi_hang','$trangthai')";
     pdo_execute($sql);
+}
+#thêm sơ đồ ghế vào sơ đồ
+function insertSeatMap ($id_phong,$so_hang,$so_ghe_moi_hang,$trangthai,$ngay_tao){
+    $sql = "INSERT INTO so_do_ghe(id_phong,so_hang,so_ghe,trang_thai,ngay_tao) VALUES('$id_phong','$so_hang','$so_ghe_moi_hang','$trangthai','$ngay_tao')";
+    pdo_execute($sql);
+}
+#tìm id phòng
+function getId(){
+    $sql = "SELECT MAX(id_phong) AS last_id FROM phongchieu";
+    $idNewRoom = pdo_query_one($sql);
+    return $idNewRoom['last_id'];
 }
 #show all phòng
 function getRoom(){
@@ -43,7 +54,8 @@ function restoreRoom($id_phong){
     pdo_execute($sql);
 }
 #sửa phòng 
-function updateRoom($id_phong,$ten_phong,$suc_chua){
-    $sql = "UPDATE phongchieu SET ten_phong = '$ten_phong',suc_chua = '$suc_chua' WHERE id_phong = '$id_phong'";
+function updateRoom($id_phong,$ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang){
+    $sql = "UPDATE phongchieu SET ten_phong = '$ten_phong',tong_so_ghe = '$tong_so_ghe',so_hang = '$so_hang',so_ghe_moi_hang= '$so_ghe_moi_hang'  WHERE id_phong = '$id_phong'";
     pdo_execute($sql);
 }
+

@@ -36,7 +36,7 @@
                                     
                                     
                                     <td><?= $ten_phong?></td>
-                                    <td><?= $suc_chua?></td>
+                                    <td><?= $tong_so_ghe?></td>
 
                                 <td>
                                  

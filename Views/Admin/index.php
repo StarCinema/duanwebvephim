@@ -92,21 +92,40 @@ if (isset($_GET['act'])) {
             require_once './view/film/list_delete.php';
             break;
         case 'cinemaRoom':
-            if (isset($_POST['addBtn'])) {
-                $ten_phong = $_POST['nameRoom'];
-                $suc_chua = $_POST['sucChua'];
-                $trang_thai = 0;
-                $check = checkRoom($ten_phong);
-                #validate
-                if (empty($ten_phong) || empty($suc_chua) || $check != false) {
-                    $thong_bao = "Thông tin bị trống hoặc đã tồn tại. Mời bạn nhập lại thông tin.";
-                } else {
-                    insertRoom($ten_phong, $suc_chua, $trang_thai);
-                    $thong_bao = "Thêm mới phòng thành công.";
-                }
-            }
             $data = getRoom();
             require_once './view/cinemaroom/list.php';
+            break;
+        case 'addRoom':
+            $error = $loi_ten_phong  =$loi_so_hang= $loi_so_ghe_moi_hang = "";
+            $erCount = 0;
+            if (isset($_POST['addBtn'])){
+                $ten_phong = $_POST['ten_phong'];
+                $so_hang = $_POST['so_hang'];
+                $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
+                $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
+                $trangthai = 0;
+                if(empty($ten_phong)){
+                    $loi_ten_phong = 'Không được để trống tên phòng chiếu!';
+                    $erCount++;
+                }
+                if(empty($so_hang)){
+                    $loi_so_hang = 'Không được để trống số hàng!';
+                    $erCount++;
+                }
+                if(empty($so_ghe_moi_hang)){
+                    $loi_so_ghe_moi_hang = 'Không được để trống số ghế mỗi hàng!';
+                    $erCount++;
+                }
+                if ($erCount == 0){
+                    insertRoom($ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang,$trangthai);
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngay_tao = date('Y-m-d H:i:s');
+                    $idRoom = getId();
+                    insertSeatMap ($idRoom,$so_hang,$so_ghe_moi_hang,$trangthai,$ngay_tao);
+                    $thong_bao = "Thêm thành công";
+                }
+            }
+            require_once './view/cinemaroom/add.php';
             break;
         case 'deleteRoom':
             if (isset($_GET['idRoom']) && $_GET['idRoom']) {
@@ -128,9 +147,11 @@ if (isset($_GET['act'])) {
             if(isset($_POST['updateBtn'])){
                 $id_phong = $_POST['id_phong'];
                 $ten_phong = $_POST['ten_phong'];
-                $suc_chua = $_POST['suc_chua'];
-                updateRoom($id_phong,$ten_phong,$suc_chua);
-                $thong_bao = 'Sửa thành công!';
+                $so_hang = $_POST['so_hang'];
+                $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
+                $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
+                $trangthai = 0;
+                updateRoom($id_phong,$ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang);
             }
                 $data = getRoom();
                 require_once './view/cinemaroom/list.php';
@@ -163,7 +184,7 @@ if (isset($_GET['act'])) {
             # code...
             break;
         case 'ticket':
-            # code...
+            require_once './view/ticket/list.php';
             break;
         case 'trashCanTicket':
             # code...
