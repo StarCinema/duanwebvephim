@@ -126,6 +126,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <a class="collapse-item" href="index.php?act=account">Tất cả tài khoản</a>
+                        <a class="collapse-item" href="index.php?act=addAcc">Thêm mới tài khoản</a>
                         <a class="collapse-item" href="index.php?act=trashCanAccount">Thùng rác</a>
                     </div>
                 </div>

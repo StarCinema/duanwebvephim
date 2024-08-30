@@ -72,13 +72,21 @@ $path = 'http://localhost/duanwebvephim';
                             </li>
                         </ul>
                     </li>
+                    <?php
+                     if(!isset($_SESSION['user'])){
+                        ?>
 
                     <div class="logIn">
                         <li class="header-button pr-0">
                             <a href="index.php?act=logIn">Đăng nhập</a>
                         </li>
                     </div>
-
+                    <?php} else{?>
+                        <div class="logIn">
+                        
+                    </div>
+                    <?php
+                    }?>
                     <li class="menu-item-has-children">
                         <i class="fa-solid fa-user" style="margin-left: 10px">
                         </i>
