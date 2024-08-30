@@ -249,10 +249,21 @@ if (isset($_GET['act'])) {
             require_once './view/account/list_delete.php';
 
             break;
-        case 'updateAcount':
+        case 'restoreAcc':
+                # code...xóa
+                if(isset($_GET['idAcc'])&& $_GET['idAcc']){
+                    $id_taikhoan=$_GET['idAcc'];
+                    restoreAccount($id_taikhoan);
+                }
+                $listTrash=getAllaccounttrash();
+                require_once './view/account/list_delete.php';
+    
+                break;
+        case 'updateAccount':
             $error = $erUsername = $ername = $erPhone ="";
             $erCount = 0;
-            if (isset($_POST['them_btn'])) {
+            if (isset($_POST['sua_btn'])) {
+                $id_taikhoan=$_POST['id_taikhoan'];
                 $ten_dang_nhap = $_POST['ten_dang_nhap'];
                 $ho_va_ten = $_POST['ho_va_ten'];
                 
@@ -284,15 +295,16 @@ if (isset($_GET['act'])) {
                     if ($check) {
                         $error = "Tài khoản này đã tồn tại!";
                     } else {
-                        insertAccount2($ten_dang_nhap, $ho_va_ten, $email,$hinh_anh, $phone, $matkhau, $vaitro, $trangthai);
+                        updateAccount($id_taikhoan,$ten_dang_nhap, $ho_va_ten, $hinh_anh, $phone, $vaitro);
                         echo "<script>
-                        alert('Đăng ký thành công!');
+                        alert('Cập nhập thành công!');
                         window.location.href = 'index.php?act=account';
                         </script>";
                         exit();
                     }
                 }
             }
+            require_once './view/account/fix.php';
             break;
         case 'showFilm':
             # code...
