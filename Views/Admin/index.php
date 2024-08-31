@@ -5,7 +5,7 @@ require_once '../../Models/pdo.php';
 require_once '../../Models/danhmuc.php';
 require_once '../../Models/phongChieu.php';
 require_once '../../Models/taikhoan.php';
-
+require_once '../../Models/phim.php';
 # Xử lý Swich case.
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -77,10 +77,15 @@ if (isset($_GET['act'])) {
             break;
 
         case 'film':
-            $listdanhmuc = getdanhmuc();
+            $data =getFilm();
             require_once './view/film/list.php';
             break;
         case 'filmDetail':
+            if (isset($_GET['idFilm'])){
+                $id_phim = $_GET['idFilm'];
+                $data = getOneFilm($id_phim);
+                extract($data);
+            }
             require_once './view/film/deltai.php';
             break;
         case 'editFilm':
@@ -88,27 +93,87 @@ if (isset($_GET['act'])) {
             break;
         case 'addFilm':
             $listdanhmuc = getdanhmuc();
+            $error = $loi_ten_phim = $loi_mo_ta = $loi_danh_muc = $loi_thoi_gian = $loi_anh = "";
+            $erCount = 0;
+            if (isset($_POST['addBtn'])){
+                $ten_phim = $_POST['ten_phim'];
+                $mo_ta = $_POST['mo_ta'];
+                $thoi_gian = $_POST['thoi_gian'];
+                $danh_muc = $_POST['danh_muc'];
+                $trangthai = 0;
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $ngay_tao = date('Y-m-d H:i:s');
+                if(empty($ten_phim)){
+                    $loi_ten_phim = "Không được để trống tên phim!";
+                    $erCount ++;
+                }
+                if(empty($mo_ta)){
+                    $loi_mo_ta = "Không được để trống mô tả!";
+                    $erCount ++;
+                }
+                if(empty($danh_muc)){
+                    $loi_danh_muc = "Không được để trống danh mục!";
+                    $erCount ++;
+                }
+                if(empty($thoi_gian)){
+                    $loi_thoi_gian = "Không được để trống thời lượng!";
+                    $erCount ++;
+                }
+                if (empty($_FILES['anh']['name'])) {
+                    $loi_hinh_anh = "Không được để trống ảnh!";
+                    $erCount++;
+                }
+                if ($erCount == 0){
+                    $img_name = $_FILES['anh']['name'];
+                    $tmp = $_FILES['anh']['tmp_name'];
+                    move_uploaded_file($tmp,'../../uploads/'.$img_name );
+                    insertFiml($ten_phim ,$mo_ta ,$thoi_gian,$danh_muc ,$img_name,$ngay_tao,$trangthai);
+                    $thong_bao = "Thêm mới thành công!";
+                }else {
+                    $error = "Lỗi nhập liệu, vui lòng nhập lại!";
+                }
+
+            }
             require_once './view/film/add.php';
             break;
         case 'trashCanFilm':
             require_once './view/film/list_delete.php';
             break;
         case 'cinemaRoom':
-            if (isset($_POST['addBtn'])) {
-                $ten_phong = $_POST['nameRoom'];
-                $suc_chua = $_POST['sucChua'];
-                $trang_thai = 0;
-                $check = checkRoom($ten_phong);
-                #validate
-                if (empty($ten_phong) || empty($suc_chua) || $check != false) {
-                    $thong_bao = "Thông tin bị trống hoặc đã tồn tại. Mời bạn nhập lại thông tin.";
-                } else {
-                    insertRoom($ten_phong, $suc_chua, $trang_thai);
-                    $thong_bao = "Thêm mới phòng thành công.";
-                }
-            }
             $data = getRoom();
             require_once './view/cinemaroom/list.php';
+            break;
+        case 'addRoom':
+            $error = $loi_ten_phong  =$loi_so_hang= $loi_so_ghe_moi_hang = "";
+            $erCount = 0;
+            if (isset($_POST['addBtn'])){
+                $ten_phong = $_POST['ten_phong'];
+                $so_hang = $_POST['so_hang'];
+                $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
+                $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
+                $trangthai = 0;
+                if(empty($ten_phong)){
+                    $loi_ten_phong = 'Không được để trống tên phòng chiếu!';
+                    $erCount++;
+                }
+                if(empty($so_hang)){
+                    $loi_so_hang = 'Không được để trống số hàng!';
+                    $erCount++;
+                }
+                if(empty($so_ghe_moi_hang)){
+                    $loi_so_ghe_moi_hang = 'Không được để trống số ghế mỗi hàng!';
+                    $erCount++;
+                }
+                if ($erCount == 0){
+                    insertRoom($ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang,$trangthai);
+                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                    $ngay_tao = date('Y-m-d H:i:s');
+                    $idRoom = getId();
+                    insertSeatMap ($idRoom,$so_hang,$so_ghe_moi_hang,$trangthai,$ngay_tao);
+                    $thong_bao = "Thêm thành công";
+                }
+            }
+            require_once './view/cinemaroom/add.php';
             break;
         case 'deleteRoom':
             if (isset($_GET['idRoom']) && $_GET['idRoom']) {
@@ -130,9 +195,11 @@ if (isset($_GET['act'])) {
             if(isset($_POST['updateBtn'])){
                 $id_phong = $_POST['id_phong'];
                 $ten_phong = $_POST['ten_phong'];
-                $suc_chua = $_POST['suc_chua'];
-                updateRoom($id_phong,$ten_phong,$suc_chua);
-                $thong_bao = 'Sửa thành công!';
+                $so_hang = $_POST['so_hang'];
+                $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
+                $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
+                $trangthai = 0;
+                updateRoom($id_phong,$ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang);
             }
                 $data = getRoom();
                 require_once './view/cinemaroom/list.php';
@@ -313,7 +380,7 @@ if (isset($_GET['act'])) {
             # code...
             break;
         case 'ticket':
-            # code...
+            require_once './view/ticket/list.php';
             break;
         case 'trashCanTicket':
             # code...

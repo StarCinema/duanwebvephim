@@ -94,6 +94,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <a class="collapse-item" href="index.php?act=cinemaRoom">Tất cả phòng</a>
+                        <a class="collapse-item" href="index.php?act=addRoom">Thêm phòng</a>
                         <a class="collapse-item" href="index.php?act=trashCanRoom">Thùng rác</a>
                     </div>
                 </div>
@@ -148,12 +149,12 @@
             </li>
             <!-- vé đặt -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrder"
-                    aria-expanded="true" aria-controls="collapseOrder">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrderTik"
+                    aria-expanded="true" aria-controls="collapseOrderTik">
                     <i class="fas fa-fw fa-shopping-bag"></i>
                     <span>Quản lý vé đặt</span>
                 </a>
-                <div id="collapseOrder" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
+                <div id="collapseOrderTik" class="collapse" aria-labelledby="headingOrder" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="index.php?act=orderTicket">Tất cả </a>
                     </div>

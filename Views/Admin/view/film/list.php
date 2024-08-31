@@ -18,14 +18,14 @@
                     <label for="filterCategory" class="mr-2">Loại phim:</label>
                     <select name="danh_muc" class="form-control" id="filterCategory">
                         <option value="0">Tất cả</option>
-                        <?php foreach($listdanhmuc as $item){
+                        <?php foreach ($listdanhmuc as $item) {
                             extract($item);
                             ?>
 
-                        <option value="<?=$id_danh_muc?>"><?=$ten_danh_muc?></option>
-                        
-                        <?php
-                            }?>
+                            <option value="<?= $id_danh_muc ?>"><?= $ten_danh_muc ?></option>
+
+                            <?php
+                        } ?>
                     </select>
                 </div>
                 <input name="tim_btn" type="submit" class="btn btn-primary" value="Lọc">
@@ -53,40 +53,40 @@
                                     <th>Tên phim</th>
                                     <th>Ngày thêm</th>
                                     <th>Thể loại</th>
-                                    <th>Ảnh</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <td>1</td>
-                                <td>phim 1</td>
-                                <td>22/7/2002</td>
-                                <td>Hành động</td>
-                                <td><img src="../uploads/" class="img-fluid w-10 custom-img-height"></td>
-
-
-                                <td>
-                                    <!-- View details link with icon -->
-                                    <a href="index.php?act=filmDetail"
-                                        class="btn btn-info btn-sm viewDetails" data-id="1">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <!-- Edit link with icon -->
-                                    <a href="index.php?act=editFilm"
-                                        class="btn btn-primary btn-sm editCategory" data-id="1">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <!-- Delete link with icon -->
-                                    <a onclick="return xoa_san_pham() "
-                                        href="index.php?act=xoa_san_pham&id_xoasp=<?= $sp['id_san_pham'] ?>"
-                                        class="btn btn-danger btn-sm deleteCategory" data-id="1">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
+                                <?php 
+                                foreach ($data as $key => $phim) {
+                                  ?>
+                                <tr>
+                                    <td><?=$key +1?></td>
+                                    <td><?=$phim['ten_phim'] ?></td>
+                                    <td><?=$phim['thoi_gian_tao'] ?></td>
+                                    <td><?=$phim['ten_danh_muc'] ?></td>
+                                    <td>
+                                        <!-- View details link with icon -->
+                                        <a href="index.php?act=filmDetail&idFilm=<?=$phim['id_phim'] ?>" class="btn btn-info btn-sm viewDetails"
+                                            data-id="1">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <!-- Edit link with icon -->
+                                        <a href="index.php?act=editFilm" class="btn btn-primary btn-sm editCategory"
+                                            data-id="1">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <!-- Delete link with icon -->
+                                        <a onclick="return xoa_san_pham() "
+                                            href="index.php?act=xoa_san_pham&id_xoasp=<?= $sp['id_san_pham'] ?>"
+                                            class="btn btn-danger btn-sm deleteCategory" data-id="1">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
                                 </tr>
-
-
-
+                                  <?php
+                                }
+                                ?>
                                 <!-- Add more rows dynamically here using JavaScript -->
                             </tbody>
                         </table>

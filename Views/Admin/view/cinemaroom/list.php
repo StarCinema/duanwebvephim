@@ -33,7 +33,7 @@ foreach ($data as $key => $room) {
                                 <tr>
                                     <td><?=$key +1?></td>
                                     <td><?=$room['ten_phong'] ?></td>
-                                    <td><?=$room['suc_chua'] ?></td>
+                                    <td><?=$room['tong_so_ghe'] ?></td>
                                     <td>
                                         <!-- View details link with icon -->
 
@@ -64,22 +64,7 @@ foreach ($data as $key => $room) {
 
 
                     </div>
-                    <div class="input-group mb-3 w-100">
-                        <form class="input-group mb-3 w-50" action="index.php?act=cinemaRoom" method="post">
-                            <input name="nameRoom" type="text" class="form-control" id="inputCategoryName"
-                                placeholder="Nhập tên phòng...">
-                            <input name="sucChua" type="number" class="form-control" id="inputCategoryName"
-                                placeholder="Sức chứa...">
-                            <div class="input-group-append">
 
-                                <input class="btn btn-success" id="btnAddCategory" type="submit" name="addBtn"
-                                    value="Thêm">
-
-
-                            </div>
-
-                        </form>
-                    </div>
                     <?php if (isset($thong_bao)) {
                         echo "<p >" . $thong_bao . "</p>";
                     }
