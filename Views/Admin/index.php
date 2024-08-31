@@ -77,6 +77,7 @@ if (isset($_GET['act'])) {
             break;
 
         case 'film':
+            $listdanhmuc = getdanhmuc();
             $data =getFilm();
             require_once './view/film/list.php';
             break;
@@ -358,10 +359,7 @@ if (isset($_GET['act'])) {
                 
                 if ($erCount == 0) {
                     #check tài khoản
-                    $check = checkAccount1($ten_dang_nhap, $ho_va_ten);
-                    if ($check) {
-                        $error = "Tài khoản này đã tồn tại!";
-                    } else {
+                    
                         updateAccount($id_taikhoan,$ten_dang_nhap, $ho_va_ten, $hinh_anh, $phone, $vaitro);
                         echo "<script>
                         alert('Cập nhập thành công!');
@@ -370,7 +368,7 @@ if (isset($_GET['act'])) {
                         exit();
                     }
                 }
-            }
+            
             require_once './view/account/fix.php';
             break;
         case 'showFilm':

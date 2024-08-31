@@ -68,7 +68,7 @@ function updateAccount($id_taikhoan,$ten_dang_nhap, $ho_va_ten, $hinh_anh, $phon
         $sql="update taikhoan set ten_dang_nhap='$ten_dang_nhap',ho_va_ten='$ho_va_ten',sdt='$phone',vai_tro='$vaitro' where id_taikhoan=$id_taikhoan";
         pdo_execute($sql);
     }else{
-        $sql="update taikhoan set ten_dang_nhap='$ten_dang_nhap',ho_va_ten='$ho_va_ten',hinh_anh='$hinh_anh'sdt='$phone',vai_tro='$vaitro' where id_taikhoan=$id_taikhoan";
+        $sql="update taikhoan set ten_dang_nhap='$ten_dang_nhap',ho_va_ten='$ho_va_ten',hinh_anh='$hinh_anh',sdt='$phone',vai_tro='$vaitro' where id_taikhoan=$id_taikhoan";
         pdo_execute($sql);
     }
 

@@ -21,7 +21,7 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Phòng</th>
-                                    <td>Sức chứa</td>
+                                    <td>Số ghế</td>
                                     <th>Thao tác</th>
 
                                 </tr>
