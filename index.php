@@ -4,6 +4,8 @@ ob_start();
 require_once './Models/pdo.php';
 require_once './Views/header.php';
 require_once './Models/taikhoan.php';
+require_once './Models/phim.php';
+require_once './Models/danhmuc.php';
 # Xử lý Swich case.
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -65,9 +67,9 @@ if (isset($_GET['act'])) {
             require_once './Views/Account/register.php';
             break;
         case 'logIn':
-            $error = $erEmail=$erPassword = "";
+            $error = $erEmail = $erPassword = "";
             $erCount = 0;
-            if(isset($_POST['btn_login'])){
+            if (isset($_POST['btn_login'])) {
                 $email = $_POST['email'];
                 $mat_khau = $_POST['password'];
                 #validate
@@ -82,12 +84,12 @@ if (isset($_GET['act'])) {
                 #đăng nhập
                 if ($erCount == 0) {
                     #check tài khoản
-                    $check =checkAccount2($email);
-                    if($check){
+                    $check = checkAccount2($email);
+                    if ($check) {
                         $passwordUser = $check['mat_khau'];
                         $emailUser = $check['email'];
                         if (password_verify($mat_khau, $passwordUser)) {
-                            $_SESSION['user'] =  $check;
+                            $_SESSION['user'] = $check;
                             echo "<script>
                             alert('Đăng nhập thành công!');
                             window.location.href = 'index.php?act=home'; 
@@ -96,10 +98,10 @@ if (isset($_GET['act'])) {
                         } else {
                             $erPassword = "Mật khẩu không chính xác";
                         }
-                    }else {
+                    } else {
                         $error = "Tài khoản không tồn tại";
                     }
-                    
+
                 }
             }
             require_once './Views/Account/login.php';
@@ -144,13 +146,20 @@ if (isset($_GET['act'])) {
             # tim kiếm
             break;
         case 'movieDetails':
-            # chi tiết phim
+            if (isset($_GET['idFilm'])){
+                $id_phim = $_GET['idFilm'];
+            }
+            $data = getOneFilm($id_phim);
+            extract($data);
+            require_once './Views/User/chitietphim.php';
             break;
         default:
+            $data = getFilm();
             require_once './Views/main.php';
             break;
     }
 } else {
+    $data = getFilm();
     require_once './Views/main.php';
 }
 require_once './Views/footer.php';
