@@ -90,7 +90,57 @@ if (isset($_GET['act'])) {
             require_once './view/film/deltai.php';
             break;
         case 'editFilm':
+            if(isset($_GET['idFilm'])&& $_GET['idFilm']){
+                $id_phim=$_GET['idFilm'];
+                $oneFilm=getOneFilm($id_phim);
+            }
+            $listdanhmuc = getdanhmuc();
             require_once './view/film/fix.php';
+            break;
+        case 'updateFilm':
+            $error = $loi_ten_phim = $loi_mo_ta = $loi_danh_muc = $loi_thoi_gian ="";
+            $erCount = 0;
+            if (isset($_POST['sua_btn'])&& $_POST['sua_btn']){
+                $id_phim=$_POST['id_phim'];
+                $ten_phim = $_POST['ten_phim'];
+                $mo_ta = $_POST['mo_ta'];
+                $thoi_gian = $_POST['thoi_gian'];
+                $danh_muc = $_POST['danh_muc'];
+                $img_name = $_FILES['image']['name'];
+                $tmp = $_FILES['image']['tmp_name'];
+                move_uploaded_file($tmp,'../../uploads/'.$img_name );
+                if(empty($ten_phim)){
+                    $loi_ten_phim = "Không được để trống tên phim!";
+                    $erCount ++;
+                }
+                if(empty($mo_ta)){
+                    $loi_mo_ta = "Không được để trống mô tả!";
+                    $erCount ++;
+                }
+                if(empty($danh_muc)){
+                    $loi_danh_muc = "Không được để trống danh mục!";
+                    $erCount ++;
+                }
+                if(empty($thoi_gian)){
+                    $loi_thoi_gian = "Không được để trống thời lượng!";
+                    $erCount ++;
+                }
+                if ($erCount == 0){
+                    updateFilm($id_phim,$ten_phim ,$mo_ta ,$thoi_gian,$danh_muc ,$img_name);
+                    $thong_bao = "Cập nhập thành công!";
+                    // echo "<script>
+                    // alert('Cập nhập thành công!');
+                    // window.location.href = 'index.php?act=film';
+                    // </script>";
+                    // exit();
+                }else {
+                    $error = "Lỗi nhập liệu, vui lòng nhập lại!";
+                }
+
+            }
+            $listdanhmuc = getdanhmuc();
+            $data =getFilm();
+            require_once './view/film/list.php';
             break;
         case 'addFilm':
             $listdanhmuc = getdanhmuc();
@@ -137,7 +187,28 @@ if (isset($_GET['act'])) {
             }
             require_once './view/film/add.php';
             break;
+        
         case 'trashCanFilm':
+            $listTrash=getTrashFilm();
+            require_once './view/film/list_delete.php';
+            break;
+        case 'deleteFilm';
+            if(isset($_GET['idFilm'])){
+                $id_phim=$_GET['idFilm'];
+                deleteFilm($id_phim);
+
+            }
+            
+            $data =getFilm();
+            require_once './view/film/list.php';
+            break;
+        case 'restoreFilm';
+              if(isset($_GET['idFilm'])){
+                $id_phim=$_GET['idFilm'];
+                restoreFilm($id_phim);
+
+            }
+            $listTrash=getTrashFilm();
             require_once './view/film/list_delete.php';
             break;
         case 'cinemaRoom':

@@ -4,6 +4,11 @@
         /* Đặt chiều cao tối đa */
     }
 </style>
+<script>
+        function confirmDelete() {
+            return confirm('Bạn có chắc chắn muốn xóa mục này không?');
+        }
+</script>
 <!-- main page -->
 <div class="container-fluid">
 
@@ -72,13 +77,13 @@
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <!-- Edit link with icon -->
-                                        <a href="index.php?act=editFilm" class="btn btn-primary btn-sm editCategory"
+                                        <a href="index.php?act=editFilm&idFilm=<?=$phim['id_phim'] ?>" class="btn btn-primary btn-sm editCategory"
                                             data-id="1">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- Delete link with icon -->
-                                        <a onclick="return xoa_san_pham() "
-                                            href="index.php?act=xoa_san_pham&id_xoasp=<?= $sp['id_san_pham'] ?>"
+                                        <a onclick="return confirmDelete()"
+                                            href="index.php?act=deleteFilm&idFilm=<?=$phim['id_phim'] ?>"
                                             class="btn btn-danger btn-sm deleteCategory" data-id="1">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
@@ -104,4 +109,5 @@
     </div>
 
 </div>
+
 <!-- end main page-fluid -->

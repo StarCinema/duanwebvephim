@@ -70,7 +70,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-sm-12 mb-0 product-image"> <!-- Sử dụng col-sm-12 để ảnh chiếm toàn bộ chiều rộng của phần tử chứa -->
-                <img src="../../uploads/<?=$anh_bia?>" class="img-fluid" alt="Ảnh phim">
+                <img src="../../uploads/<?=$anh_bia?>" class="img-fluid" width="200px" alt="Ảnh phim">
             </div>
         </div>
     </div>
