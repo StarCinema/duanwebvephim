@@ -353,7 +353,7 @@ if (isset($_GET['act'])) {
                     if ($check) {
                         $error = "Tài khoản này đã tồn tại!";
                     } else {
-                        insertAccount2($ten_dang_nhap, $ho_va_ten, $email,$hinh_anh, $phone, $matkhau, $vaitro, $trangthai);
+                        insertAccount2($ten_dang_nhap, $ho_va_ten, $email,$hinh_anh, $phone, $passwordHash , $vaitro, $trangthai);
                         echo "<script>
                         alert('Đăng ký thành công!');
                         window.location.href = 'index.php?act=account';
