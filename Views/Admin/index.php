@@ -279,15 +279,13 @@ if (isset($_GET['act'])) {
                 $trangthai = 0;
                 updateRoom($id_phong, $ten_phong, $tong_so_ghe, $so_hang, $so_ghe_moi_hang);
                 deleteSeatsByRoom($id_phong);
-                    // Tạo ghế và thêm vào cơ sở dữ liệu
-                    for ($row = 1; $row <= $so_hang; $row++) {
-                        for ($seat = 1; $seat <= $so_ghe_moi_hang; $seat++) {
-                            $ten_ghe = chr(64 + $row) . $seat; // Tạo tên ghế (A1, B2, ...)
-                            insertGhe($id_phong, $row, $seat, $trangthai, $ten_ghe);
-                        }
+                // Tạo ghế và thêm vào cơ sở dữ liệu
+                for ($row = 1; $row <= $so_hang; $row++) {
+                    for ($seat = 1; $seat <= $so_ghe_moi_hang; $seat++) {
+                        $ten_ghe = chr(64 + $row) . $seat; // Tạo tên ghế (A1, B2, ...)
+                        insertGhe($id_phong, $row, $seat, $trangthai, $ten_ghe);
                     }
-                
-               
+                }
             }
             $data = getRoom();
             require_once './view/cinemaroom/list.php';
