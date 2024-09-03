@@ -467,7 +467,10 @@ if (isset($_GET['act'])) {
             require_once './view/account/fix.php';
             break;
         case 'showFilm':
-            # code...
+            require_once './view/showFilm/list.php';
+            break;
+        case 'addShowFilm':
+            require_once './view/showFilm/add.php';
             break;
         case 'trashCanShowFilm':
             # code...

@@ -111,6 +111,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
 
                         <a class="collapse-item" href="index.php?act=showFilm">Tất cả xuất chiếu</a>
+                        <a class="collapse-item" href="index.php?act=addShowFilm">Thêm xuất chiếu</a>
                         <a class="collapse-item" href="index.php?act=trashCanShowFilm">Thùng rác</a>
                     </div>
                 </div>
