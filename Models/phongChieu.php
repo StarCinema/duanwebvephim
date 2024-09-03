@@ -58,6 +58,12 @@ function updateRoom($id_phong,$ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang)
     $sql = "UPDATE phongchieu SET ten_phong = '$ten_phong',tong_so_ghe = '$tong_so_ghe',so_hang = '$so_hang',so_ghe_moi_hang= '$so_ghe_moi_hang'  WHERE id_phong = '$id_phong'";
     pdo_execute($sql);
 }
+#xóa ghế thừa 
+function deleteSeatsByRoom($id_phong) {
+    pdo_execute("DELETE FROM ghe WHERE id_phong = ?", $id_phong);
+}
+
+
 #lấy sơ đồ ghế 
 function getSeats($id_phong){
     $sql = "SELECT * FROM ghe WHERE id_phong = '$id_phong'";
