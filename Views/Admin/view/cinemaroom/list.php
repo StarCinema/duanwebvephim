@@ -36,7 +36,11 @@ foreach ($data as $key => $room) {
                                     <td><?=$room['tong_so_ghe'] ?></td>
                                     <td>
                                         <!-- View details link with icon -->
-
+                                 
+                                        <a href="index.php?act=roomDetail&idRoom=<?=$room['id_phong'] ?>" class="btn btn-info btn-sm viewDetails"
+                                            data-id="1">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                         <!-- Edit link with icon -->
                                         <a href="index.php?act=editRoom&idRoom=<?= $room['id_phong'] ?>"
                                             class="btn btn-primary btn-sm editCategory" data-id="1">
