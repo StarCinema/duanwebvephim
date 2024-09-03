@@ -6,6 +6,8 @@ require_once '../../Models/danhmuc.php';
 require_once '../../Models/phongChieu.php';
 require_once '../../Models/taikhoan.php';
 require_once '../../Models/phim.php';
+require_once '../../Models/showtimes.php';
+
 # Xử lý Swich case.
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -128,11 +130,11 @@ if (isset($_GET['act'])) {
                 if ($erCount == 0) {
                     updateFilm($id_phim, $ten_phim, $mo_ta, $thoi_gian, $danh_muc, $img_name);
                     $thong_bao = "Cập nhập thành công!";
-                    // echo "<script>
-                    // alert('Cập nhập thành công!');
-                    // window.location.href = 'index.php?act=film';
-                    // </script>";
-                    // exit();
+                    echo "<script>
+                    alert('Cập nhập thành công!');
+                    window.location.href = 'index.php?act=film';
+                    </script>";
+                    exit();
                 } else {
                     $error = "Lỗi nhập liệu, vui lòng nhập lại!";
                 }
@@ -467,10 +469,70 @@ if (isset($_GET['act'])) {
             require_once './view/account/fix.php';
             break;
         case 'showFilm':
+            $listAllShow=getShows();
             require_once './view/showFilm/list.php';
             break;
         case 'addShowFilm':
+            $phim = getFilm();
+            $data = getRoom();
+            $error = $erUsername = $ername = $erPhone = "";
+            $erCount = 0;
+            if(isset($_POST['add_btn'])&& $_POST['add_btn']){
+                $id_phim = $_POST['id_phim']; 
+                $id_phong = $_POST['id_phong']; 
+                $thoi_gian_bat_dau = $_POST['thoi_gian_bat_dau']; 
+                $thoi_gian_ket_thuc = $_POST['thoi_gian_ket_thuc']; 
+                $trang_thai = 0;
+                $ngay_tao = date("Y-m-d H:i:s");
+
+                // Định dạng lại thời gian cho phù hợp với kiểu DATETIME của SQL
+                if (!empty($thoi_gian_bat_dau)) {
+                    $thoi_gian_bat_dau = date("Y-m-d H:i:s", strtotime($thoi_gian_bat_dau));
+                }
+                if (!empty($thoi_gian_ket_thuc)) {
+                    $thoi_gian_ket_thuc = date("Y-m-d H:i:s", strtotime($thoi_gian_ket_thuc));
+                }
+
+                #validate
+                if (empty($id_phim)) {
+                    $erPhim = "Không được để trống tên phim";
+                    $erCount++;
+                }
+                if (empty($id_phong)) {
+                    $erPhong = "Không được để trống phòng";
+                    $erCount++;
+                }
+
+                if (empty($thoi_gian_bat_dau)) {
+                    $erTimesfirst = "Không được để trống thời gian";
+                    $erCount++;
+                }
+                if (empty($thoi_gian_ket_thuc)) {
+                    $erTimesend = "Không được để trống thời gian";
+                    $erCount++;
+                }
+                if ($erCount == 0) {
+                    
+
+                    insertShows($id_phim,$id_phong,$thoi_gian_bat_dau, $thoi_gian_ket_thuc, $trang_thai,$ngay_tao);
+                    echo "<script>
+                        alert('Thêm thành công!');
+                        window.location.href = 'index.php?act=showFilm';
+                        </script>";
+                    exit();
+                    echo $thong_bao="Thêm thành công.";
+                }
+
+
+            }
+            
             require_once './view/showFilm/add.php';
+            break;
+        case 'showtimeDetail':
+            break;
+        case '':
+            break;
+        case '':
             break;
         case 'trashCanShowFilm':
             # code...

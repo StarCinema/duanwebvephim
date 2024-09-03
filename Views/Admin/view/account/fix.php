@@ -44,9 +44,15 @@
                                 <div class="form-group">
                                     <label for="productCategory">Phân quyền</label>                                  
                                     <select name="vai_tro" class="form-control" id="productCategory">
-                                        
-                                        <option value="0">User</option>
-                                        <option value="1">Admin</option>
+                                    <?php 
+                                        if($vai_tro == 0) {
+                                           echo "<option value='0'>User</option>";
+                                           echo "<option value='1'>Admin</option>";
+                                        } else {
+                                           echo "<option value='1'>Admin</option>";
+                                           echo "<option value='0'>User</option>";
+                                        }
+                                        ?>
                                     </select>
                                     
                                 </div>

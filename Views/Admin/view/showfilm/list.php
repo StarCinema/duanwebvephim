@@ -30,28 +30,42 @@
                             </thead>
                             <tbody>
                                 <!-- Example rows, replace with PHP loop for dynamic content -->
-                                <tr>
-                                    <td>1</td>
-                                    <td>Phim A</td>
-                                    <td>Phòng 1</td>
-                                    <td>2024-09-01 18:00</td>
-                                    <td>2024-09-01 20:00</td>
-                                    <td>Đã Lên Lịch</td>
+                                 <?php $key=1;
+                                 foreach ($listAllShow as $item){
+                                    extract($item);
+                                    
+                                    $editShow="index.php?act=editShowtime&idShowtime=".$id;
+                                    $viewdetail="index.php?act=showtimeDetail&idShowtime=".$id;
+                                    $deleteShow="index.php?act=deleteShowtime&idShowtime=".$id;
+                                 ?>
+                               
+                                    <td><?= $key+1?></td>
+                                    <td><?=$ten_phim?></td>
+                                    <td><?=$ten_phong?></td>
+                                    <td><?=$thoi_gian_bat_dau?></td>
+                                    <td><?=$thoi_gian_ket_thuc?></td>
+                                    <td><?php if($trang_thai==0){
+                                        echo "Đã lên lịch";
+                                        }elseif($trang_thai==1){ echo "Hoàn thành";}
+                                        else{ echo "Hủy";}?></td>
                                     <td>
                                         <!-- View details link with icon -->
-                                        <a href="index.php?act=showtimeDetail&idShowtime=1" class="btn btn-info btn-sm viewDetails" data-id="1">
+                                        <a href="<?=$viewdetail?>" class="btn btn-info btn-sm viewDetails" data-id="1">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <!-- Edit link with icon -->
-                                        <a href="index.php?act=editShowtime&idShowtime=1" class="btn btn-primary btn-sm editCategory" data-id="1">
+                                        <a href="<?=$editShow?>" class="btn btn-primary btn-sm editCategory" data-id="1">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <!-- Delete link with icon -->
-                                        <a onclick="return xoa_Showtime()" href="index.php?act=deleteShowtime&idShowtime=1" class="btn btn-danger btn-sm deleteCategory" data-id="1">
+                                        <a onclick="return xoa_Showtime()" href="<?=$deleteShow?>" class="btn btn-danger btn-sm deleteCategory" data-id="1">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
                                 </tr>
+                                <?php $key++;
+                                 }?>
+                                <tr>
                                 <!-- Add more rows dynamically here using JavaScript -->
                             </tbody>
                         </table>
