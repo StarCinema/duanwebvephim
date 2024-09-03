@@ -78,11 +78,11 @@ if (isset($_GET['act'])) {
 
         case 'film':
             $listdanhmuc = getdanhmuc();
-            $data =getFilm();
+            $data = getFilm();
             require_once './view/film/list.php';
             break;
         case 'filmDetail':
-            if (isset($_GET['idFilm'])){
+            if (isset($_GET['idFilm'])) {
                 $id_phim = $_GET['idFilm'];
                 $data = getOneFilm($id_phim);
                 extract($data);
@@ -90,63 +90,63 @@ if (isset($_GET['act'])) {
             require_once './view/film/deltai.php';
             break;
         case 'editFilm':
-            if(isset($_GET['idFilm'])&& $_GET['idFilm']){
-                $id_phim=$_GET['idFilm'];
-                $oneFilm=getOneFilm($id_phim);
+            if (isset($_GET['idFilm']) && $_GET['idFilm']) {
+                $id_phim = $_GET['idFilm'];
+                $oneFilm = getOneFilm($id_phim);
             }
             $listdanhmuc = getdanhmuc();
             require_once './view/film/fix.php';
             break;
         case 'updateFilm':
-            $error = $loi_ten_phim = $loi_mo_ta = $loi_danh_muc = $loi_thoi_gian ="";
+            $error = $loi_ten_phim = $loi_mo_ta = $loi_danh_muc = $loi_thoi_gian = "";
             $erCount = 0;
-            if (isset($_POST['sua_btn'])&& $_POST['sua_btn']){
-                $id_phim=$_POST['id_phim'];
+            if (isset($_POST['sua_btn']) && $_POST['sua_btn']) {
+                $id_phim = $_POST['id_phim'];
                 $ten_phim = $_POST['ten_phim'];
                 $mo_ta = $_POST['mo_ta'];
                 $thoi_gian = $_POST['thoi_gian'];
                 $danh_muc = $_POST['danh_muc'];
                 $img_name = $_FILES['image']['name'];
                 $tmp = $_FILES['image']['tmp_name'];
-                move_uploaded_file($tmp,'../../uploads/'.$img_name );
-                if(empty($ten_phim)){
+                move_uploaded_file($tmp, '../../uploads/' . $img_name);
+                if (empty($ten_phim)) {
                     $loi_ten_phim = "Không được để trống tên phim!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($mo_ta)){
+                if (empty($mo_ta)) {
                     $loi_mo_ta = "Không được để trống mô tả!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($danh_muc)){
+                if (empty($danh_muc)) {
                     $loi_danh_muc = "Không được để trống danh mục!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($thoi_gian)){
+                if (empty($thoi_gian)) {
                     $loi_thoi_gian = "Không được để trống thời lượng!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if ($erCount == 0){
-                    updateFilm($id_phim,$ten_phim ,$mo_ta ,$thoi_gian,$danh_muc ,$img_name);
+                if ($erCount == 0) {
+                    updateFilm($id_phim, $ten_phim, $mo_ta, $thoi_gian, $danh_muc, $img_name);
                     $thong_bao = "Cập nhập thành công!";
                     // echo "<script>
                     // alert('Cập nhập thành công!');
                     // window.location.href = 'index.php?act=film';
                     // </script>";
                     // exit();
-                }else {
+                } else {
                     $error = "Lỗi nhập liệu, vui lòng nhập lại!";
                 }
 
             }
             $listdanhmuc = getdanhmuc();
-            $data =getFilm();
+            $data = getFilm();
             require_once './view/film/list.php';
             break;
         case 'addFilm':
             $listdanhmuc = getdanhmuc();
             $error = $loi_ten_phim = $loi_mo_ta = $loi_danh_muc = $loi_thoi_gian = $loi_anh = "";
             $erCount = 0;
-            if (isset($_POST['addBtn'])){
+            if (isset($_POST['addBtn'])) {
                 $ten_phim = $_POST['ten_phim'];
                 $mo_ta = $_POST['mo_ta'];
                 $thoi_gian = $_POST['thoi_gian'];
@@ -154,61 +154,61 @@ if (isset($_GET['act'])) {
                 $trangthai = 0;
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
                 $ngay_tao = date('Y-m-d H:i:s');
-                if(empty($ten_phim)){
+                if (empty($ten_phim)) {
                     $loi_ten_phim = "Không được để trống tên phim!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($mo_ta)){
+                if (empty($mo_ta)) {
                     $loi_mo_ta = "Không được để trống mô tả!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($danh_muc)){
+                if (empty($danh_muc)) {
                     $loi_danh_muc = "Không được để trống danh mục!";
-                    $erCount ++;
+                    $erCount++;
                 }
-                if(empty($thoi_gian)){
+                if (empty($thoi_gian)) {
                     $loi_thoi_gian = "Không được để trống thời lượng!";
-                    $erCount ++;
+                    $erCount++;
                 }
                 if (empty($_FILES['anh']['name'])) {
                     $loi_hinh_anh = "Không được để trống ảnh!";
                     $erCount++;
                 }
-                if ($erCount == 0){
+                if ($erCount == 0) {
                     $img_name = $_FILES['anh']['name'];
                     $tmp = $_FILES['anh']['tmp_name'];
-                    move_uploaded_file($tmp,'../../uploads/'.$img_name );
-                    insertFiml($ten_phim ,$mo_ta ,$thoi_gian,$danh_muc ,$img_name,$ngay_tao,$trangthai);
+                    move_uploaded_file($tmp, '../../uploads/' . $img_name);
+                    insertFiml($ten_phim, $mo_ta, $thoi_gian, $danh_muc, $img_name, $ngay_tao, $trangthai);
                     $thong_bao = "Thêm mới thành công!";
-                }else {
+                } else {
                     $error = "Lỗi nhập liệu, vui lòng nhập lại!";
                 }
 
             }
             require_once './view/film/add.php';
             break;
-        
+
         case 'trashCanFilm':
-            $listTrash=getTrashFilm();
+            $listTrash = getTrashFilm();
             require_once './view/film/list_delete.php';
             break;
         case 'deleteFilm';
-            if(isset($_GET['idFilm'])){
-                $id_phim=$_GET['idFilm'];
+            if (isset($_GET['idFilm'])) {
+                $id_phim = $_GET['idFilm'];
                 deleteFilm($id_phim);
 
             }
-            
-            $data =getFilm();
+
+            $data = getFilm();
             require_once './view/film/list.php';
             break;
         case 'restoreFilm';
-              if(isset($_GET['idFilm'])){
-                $id_phim=$_GET['idFilm'];
+            if (isset($_GET['idFilm'])) {
+                $id_phim = $_GET['idFilm'];
                 restoreFilm($id_phim);
 
             }
-            $listTrash=getTrashFilm();
+            $listTrash = getTrashFilm();
             require_once './view/film/list_delete.php';
             break;
         case 'cinemaRoom':
@@ -216,32 +216,38 @@ if (isset($_GET['act'])) {
             require_once './view/cinemaroom/list.php';
             break;
         case 'addRoom':
-            $error = $loi_ten_phong  =$loi_so_hang= $loi_so_ghe_moi_hang = "";
+            $error = $loi_ten_phong = $loi_so_hang = $loi_so_ghe_moi_hang = "";
             $erCount = 0;
-            if (isset($_POST['addBtn'])){
+            if (isset($_POST['addBtn'])) {
                 $ten_phong = $_POST['ten_phong'];
                 $so_hang = $_POST['so_hang'];
                 $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
                 $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
                 $trangthai = 0;
-                if(empty($ten_phong)){
+                if (empty($ten_phong)) {
                     $loi_ten_phong = 'Không được để trống tên phòng chiếu!';
                     $erCount++;
                 }
-                if(empty($so_hang)){
+                if (empty($so_hang)) {
                     $loi_so_hang = 'Không được để trống số hàng!';
                     $erCount++;
                 }
-                if(empty($so_ghe_moi_hang)){
+                if (empty($so_ghe_moi_hang)) {
                     $loi_so_ghe_moi_hang = 'Không được để trống số ghế mỗi hàng!';
                     $erCount++;
                 }
-                if ($erCount == 0){
-                    insertRoom($ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang,$trangthai);
+                if ($erCount == 0) {
+                    insertRoom($ten_phong, $tong_so_ghe, $so_hang, $so_ghe_moi_hang, $trangthai);
                     date_default_timezone_set('Asia/Ho_Chi_Minh');
                     $ngay_tao = date('Y-m-d H:i:s');
                     $idRoom = getId();
-                    insertSeatMap ($idRoom,$so_hang,$so_ghe_moi_hang,$trangthai,$ngay_tao);
+                    // Tạo ghế và thêm vào cơ sở dữ liệu
+                    for ($row = 1; $row <= $so_hang; $row++) {
+                        for ($seat = 1; $seat <= $so_ghe_moi_hang; $seat++) {
+                            $ten_ghe = chr(64 + $row) . $seat; // Tạo tên ghế (A1, B2, ...)
+                            insertGhe($idRoom, $row, $seat, $trangthai, $ten_ghe);
+                        }
+                    }
                     $thong_bao = "Thêm thành công";
                 }
             }
@@ -256,55 +262,73 @@ if (isset($_GET['act'])) {
             require_once './view/cinemaroom/list.php';
             break;
         case 'editRoom':
-            if(isset($_GET['idRoom'])){
+            if (isset($_GET['idRoom'])) {
                 $id_phong = $_GET['idRoom'];
             }
-            $data =  getOneRoom($id_phong);
+            $data = getOneRoom($id_phong);
             extract($data);
             require_once './view/cinemaroom/fix.php';
             break;
-            case 'updateRoom':
-            if(isset($_POST['updateBtn'])){
+        case 'updateRoom':
+            if (isset($_POST['updateBtn'])) {
                 $id_phong = $_POST['id_phong'];
                 $ten_phong = $_POST['ten_phong'];
                 $so_hang = $_POST['so_hang'];
                 $so_ghe_moi_hang = $_POST['so_ghe_moi_hang'];
                 $tong_so_ghe = $so_hang * $so_ghe_moi_hang;
                 $trangthai = 0;
-                updateRoom($id_phong,$ten_phong,$tong_so_ghe,$so_hang,$so_ghe_moi_hang);
+                updateRoom($id_phong, $ten_phong, $tong_so_ghe, $so_hang, $so_ghe_moi_hang);
+                deleteSeatsByRoom($id_phong);
+                // Tạo ghế và thêm vào cơ sở dữ liệu
+                for ($row = 1; $row <= $so_hang; $row++) {
+                    for ($seat = 1; $seat <= $so_ghe_moi_hang; $seat++) {
+                        $ten_ghe = chr(64 + $row) . $seat; // Tạo tên ghế (A1, B2, ...)
+                        insertGhe($id_phong, $row, $seat, $trangthai, $ten_ghe);
+                    }
+                }
             }
-                $data = getRoom();
-                require_once './view/cinemaroom/list.php';
-                break;
+            $data = getRoom();
+            require_once './view/cinemaroom/list.php';
+            break;
         case 'trashCanRoom':
             $data = getRoomTr();
             require_once './view/cinemaroom/list_delete.php';
             break;
         case 'restoreRoom':
-            if(isset($_GET['idRoom'])){
+            if (isset($_GET['idRoom'])) {
                 $id_phong = $_GET['idRoom'];
                 restoreRoom($id_phong);
-            }else{
+            } else {
                 $id_phong = "";
-                restoreRoom($id_phong);  
+                restoreRoom($id_phong);
             }
             $data = getRoomTr();
             require_once './view/cinemaroom/list_delete.php';
             break;
+        case 'roomDetail':
+            if (isset($_GET['idRoom'])) {
+                $id_phong = $_GET['idRoom'];
+            }
+            $data = getOneRoom($id_phong);
+            $seats = getSeats($id_phong);
+            $emptySeats = get0Seats($id_phong);
+            extract($data);
+            require_once './view/cinemaroom/detailRoom.php';
+            break;
         case 'account':
-            $listAllaccount=getAllaccount();
+            $listAllaccount = getAllaccount();
             require_once './view/account/list.php';
             break;
         case 'detailAcc':
-            if(isset($_GET['idAcc'])&& $_GET['idAcc']){
-                $id_taikhoan=$_GET['idAcc'];
-                $oneAccount=getOneaccount($id_taikhoan);
+            if (isset($_GET['idAcc']) && $_GET['idAcc']) {
+                $id_taikhoan = $_GET['idAcc'];
+                $oneAccount = getOneaccount($id_taikhoan);
             }
             require_once './view/account/detail.php';
-           
+
             break;
         case 'addAcc':
-            $error = $erUsername = $ername = $erEmail = $erPhone = $erPassword =$erVaitro= "";
+            $error = $erUsername = $ername = $erEmail = $erPhone = $erPassword = $erVaitro = "";
             $erCount = 0;
             if (isset($_POST['them_btn'])) {
                 $ten_dang_nhap = $_POST['ten_dang_nhap'];
@@ -315,8 +339,8 @@ if (isset($_GET['act'])) {
                 $passwordHash = password_hash($password, PASSWORD_BCRYPT);
                 $passwordPattern = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/';
                 $trangthai = 0;
-                $vaitro =$_POST['vai_tro'];
-                $hinh_anh=$_FILES['image']['name'];
+                $vaitro = $_POST['vai_tro'];
+                $hinh_anh = $_FILES['image']['name'];
                 $tmp = $_FILES['image']['tmp_name'];
                 move_uploaded_file($tmp, '../../Uploads/' . $hinh_anh);
 
@@ -337,7 +361,7 @@ if (isset($_GET['act'])) {
                     $erPhone = "Không được để trống phone";
                     $erCount++;
                 }
-               
+
                 if (empty($password)) {
                     $erPassword = "Không được để trống password";
                     $erCount++;
@@ -346,14 +370,14 @@ if (isset($_GET['act'])) {
                     $erPassword = "Mật khẩu phải ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số.";
                     $erCount++;
                 }
-              
+
                 if ($erCount == 0) {
                     #check tài khoản
                     $check = checkAccount($ten_dang_nhap, $ho_va_ten, $email);
                     if ($check) {
                         $error = "Tài khoản này đã tồn tại!";
                     } else {
-                        insertAccount2($ten_dang_nhap, $ho_va_ten, $email,$hinh_anh, $phone, $passwordHash , $vaitro, $trangthai);
+                        insertAccount2($ten_dang_nhap, $ho_va_ten, $email, $hinh_anh, $phone, $passwordHash, $vaitro, $trangthai);
                         echo "<script>
                         alert('Đăng ký thành công!');
                         window.location.href = 'index.php?act=account';
@@ -365,51 +389,51 @@ if (isset($_GET['act'])) {
             require_once './view/account/add.php';
 
             break;
-            
+
         case 'deleteAccount':
             # code...xóa
-            if(isset($_GET['idAcc'])&& $_GET['idAcc']){
-                $id_taikhoan=$_GET['idAcc'];
+            if (isset($_GET['idAcc']) && $_GET['idAcc']) {
+                $id_taikhoan = $_GET['idAcc'];
                 deleteAccount($id_taikhoan);
             }
-            $listAllaccount=getAllaccount();
+            $listAllaccount = getAllaccount();
             require_once './view/account/list.php';
 
             break;
         case 'editAccount':
-            if(isset($_GET['idAcc'])&& $_GET['idAcc']){
-                $id_taikhoan=$_GET['idAcc'];
-                $oneAccount=getOneaccount($id_taikhoan);
+            if (isset($_GET['idAcc']) && $_GET['idAcc']) {
+                $id_taikhoan = $_GET['idAcc'];
+                $oneAccount = getOneaccount($id_taikhoan);
             }
             require_once './view/account/fix.php';
             break;
         case 'trashCanAccount':
-            $listTrash=getAllaccounttrash();
+            $listTrash = getAllaccounttrash();
             require_once './view/account/list_delete.php';
 
             break;
         case 'restoreAcc':
-                # code...xóa
-                if(isset($_GET['idAcc'])&& $_GET['idAcc']){
-                    $id_taikhoan=$_GET['idAcc'];
-                    restoreAccount($id_taikhoan);
-                }
-                $listTrash=getAllaccounttrash();
-                require_once './view/account/list_delete.php';
-    
-                break;
+            # code...xóa
+            if (isset($_GET['idAcc']) && $_GET['idAcc']) {
+                $id_taikhoan = $_GET['idAcc'];
+                restoreAccount($id_taikhoan);
+            }
+            $listTrash = getAllaccounttrash();
+            require_once './view/account/list_delete.php';
+
+            break;
         case 'updateAccount':
-            $error = $erUsername = $ername = $erPhone ="";
+            $error = $erUsername = $ername = $erPhone = "";
             $erCount = 0;
             if (isset($_POST['sua_btn'])) {
-                $id_taikhoan=$_POST['id_taikhoan'];
+                $id_taikhoan = $_POST['id_taikhoan'];
                 $ten_dang_nhap = $_POST['ten_dang_nhap'];
                 $ho_va_ten = $_POST['ho_va_ten'];
-                
+
                 $phone = $_POST['sdt'];
-                
-                $vaitro =$_POST['vai_tro'];
-                $hinh_anh=$_FILES['image']['name'];
+
+                $vaitro = $_POST['vai_tro'];
+                $hinh_anh = $_FILES['image']['name'];
                 $tmp = $_FILES['image']['tmp_name'];
                 move_uploaded_file($tmp, '../../Uploads/' . $hinh_anh);
 
@@ -422,28 +446,31 @@ if (isset($_GET['act'])) {
                     $erName = "Không được để trống name";
                     $erCount++;
                 }
-                
+
                 if (empty($phone)) {
                     $erPhone = "Không được để trống phone";
                     $erCount++;
                 }
-                
+
                 if ($erCount == 0) {
                     #check tài khoản
-                    
-                        updateAccount($id_taikhoan,$ten_dang_nhap, $ho_va_ten, $hinh_anh, $phone, $vaitro);
-                        echo "<script>
+
+                    updateAccount($id_taikhoan, $ten_dang_nhap, $ho_va_ten, $hinh_anh, $phone, $vaitro);
+                    echo "<script>
                         alert('Cập nhập thành công!');
                         window.location.href = 'index.php?act=account';
                         </script>";
-                        exit();
-                    }
+                    exit();
                 }
-            
+            }
+
             require_once './view/account/fix.php';
             break;
         case 'showFilm':
-            # code...
+            require_once './view/showFilm/list.php';
+            break;
+        case 'addShowFilm':
+            require_once './view/showFilm/add.php';
             break;
         case 'trashCanShowFilm':
             # code...
