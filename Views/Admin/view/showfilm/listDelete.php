@@ -25,33 +25,43 @@
                                     <th>Thời Gian Bắt Đầu</th>
                                     <th>Thời Gian Kết Thúc</th>
                                     <th>Trạng Thái</th>
-                                    <th>Thao Tác</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- Example rows, replace with PHP loop for dynamic content -->
+                                <?php $key=1;
+                                 foreach ($listDelete as $item){
+                                    extract($item);
+                                    // var_dump($listAllShow);
+                                   
+                                    $restoreShow="index.php?act=restoreshowFilm&idShowtime=".$id;
+                                 ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>Phim A</td>
-                                    <td>Phòng 1</td>
-                                    <td>2024-09-01 18:00</td>
-                                    <td>2024-09-01 20:00</td>
-                                    <td>Đã Lên Lịch</td>
-                                    <td>
-                                        <!-- View details link with icon -->
-                                        <a href="index.php?act=showtimeDetail&idShowtime=1" class="btn btn-info btn-sm viewDetails" data-id="1">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        <!-- Edit link with icon -->
-                                        <a href="index.php?act=editShowtime&idShowtime=1" class="btn btn-primary btn-sm editCategory" data-id="1">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <!-- Delete link with icon -->
-                                        <a onclick="return xoa_Showtime()" href="index.php?act=deleteShowtime&idShowtime=1" class="btn btn-danger btn-sm deleteCategory" data-id="1">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
+                                
+                                <td><?= $key?></td>
+                                    <td><?=$ten_phim?></td>
+                                    <td><?=$ten_phong?></td>
+                                    <td><?=$thoi_gian_bat_dau?></td>
+                                    <td><?=$thoi_gian_ket_thuc?></td>
+                                    <td><?php 
+                                        
+                                       if ($trang_thai ==0 ) {
+                                           echo "Đã lên lịch";
+                                       } elseif ($trang_thai ==1 ) {
+                                           echo "Hoàn thành";
+                                       } elseif ($trang_thai == 2) {
+                                           echo "Hủy";
+                                       } else {
+                                           echo "Trạng thái không xác định"; // Trường hợp lỗi hoặc giá trị không mong muốn
+                                       }
+                                   
+                                        ?>
                                     </td>
+                                    
                                 </tr>
+                                <?php $key++;
+                                 }?>
                                 <!-- Add more rows dynamically here using JavaScript -->
                             </tbody>
                         </table>
@@ -68,7 +78,10 @@
 
 </div>
 <script>
-    function xoa_Showtime(){
-        return confirm('Bạn chắc chắn muốn xóa suất chiếu này không?');
-    }
-</script>
+        function confirmRestore() {
+            return confirm('Bạn có chắc chắn muốn khôi phục mục này không?');
+        }
+        function confirmRestoreAll() {
+            return confirm('Bạn có chắc chắn muốn khôi phục toàn bộ không?');
+        }
+    </script>

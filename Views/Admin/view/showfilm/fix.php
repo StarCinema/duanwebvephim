@@ -1,3 +1,9 @@
+<?php
+if(isset($oneShows)&&is_array($oneShows)){
+    extract($oneShows);
+    var_dump($trang_thai);
+}
+?>
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -12,19 +18,32 @@
             <!-- Form Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Thêm/Sửa Suất Chiếu</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Sửa Suất Chiếu</h6>
                 </div>
                 <div class="card-body">
-                    <form method="post" action="process_showtime.php">
+                    <form action="index.php?act=updateShowtime" method="post"enctype="multipart/form-data" >
                         <!-- Phim -->
+                        <input name="id" value="<?=$id?>" type="hidden" class="form-control" id="id" >
                         <div class="form-group">
                             <label for="phim">Phim:</label>
                             <select id="phim" name="id_phim" class="form-control">
                                 <!-- Example options -->
-                                <option value="1">Phim A</option>
-                                <option value="2">Phim B</option>
-                                <option value="3">Phim C</option>
+                                <?php 
+                                        foreach ($phim as $item){
+                                            extract($item);
+                                            if($oneShows['id_phim']==$id_phim) $sl="selected";
+                                            else $sl=""; 
+                                          echo'<option  value="'.$id_phim.'"'.$sl.'>'.$ten_phim.'</option>';
+
+                                            
+                                        }
+                                        ?>
                             </select>
+                            <span style="color:red;"><?php if (isset($erPhim)) {
+                                 echo $erPhim;
+                                 } else {
+                                    $erPhim = "";
+                            } ?></span>
                         </div>
 
                         <!-- Phòng chiếu -->
@@ -32,37 +51,75 @@
                             <label for="phong">Phòng Chiếu:</label>
                             <select id="phong" name="id_phong" class="form-control">
                                 <!-- Example options -->
-                                <option value="1">Phòng 1</option>
-                                <option value="2">Phòng 2</option>
-                                <option value="3">Phòng 3</option>
+                                <?php 
+                                        foreach ($data as $item){
+                                            extract($item);
+                                            if($oneShows['id_phong']==$id_phong) $sl="selected";
+                                            else $sl=""; 
+                                          echo'<option  value="'.$id_phong.'"'.$sl.'>'.$ten_phong.'</option>';
+
+                                            
+                                        }
+                                        ?>
                             </select>
+                            <span style="color:red;"><?php if (isset($erPhong)) {
+                                 echo $erPhong;
+                                 } else {
+                                    $erPhong = "";
+                            } ?></span>
                         </div>
 
                         <!-- Thời gian bắt đầu -->
                         <div class="form-group">
                             <label for="start_time">Thời Gian Bắt Đầu:</label>
-                            <input type="datetime-local" id="start_time" name="start_time" class="form-control">
+                            <input type="datetime-local" id="start_time" name="thoi_gian_bat_dau" class="form-control"value="<?= $thoi_gian_bat_dau?>">
+                            <span style="color:red;"><?php if (isset($erTimesfirst)) {
+                                 echo $erTimesfirst;
+                                 } else {
+                                    $erTimesfirst = "";
+                            } ?></span>
                         </div>
 
                         <!-- Thời gian kết thúc -->
                         <div class="form-group">
                             <label for="end_time">Thời Gian Kết Thúc:</label>
-                            <input type="datetime-local" id="end_time" name="end_time" class="form-control">
+                            <input type="datetime-local" id="end_time" name="thoi_gian_ket_thuc" class="form-control"value="<?=$thoi_gian_ket_thuc?>">
+                            <span style="color:red;"><?php if (isset($erTimesend)) {
+                                 echo $erTimesend;
+                                 } else {
+                                    $erTimesend = "";
+                            } ?></span>
                         </div>
 
                         <!-- Trạng thái -->
                         <div class="form-group">
                             <label for="status">Trạng Thái:</label>
-                            <select id="status" name="status" class="form-control">
-                                <option value="scheduled">Đã Lên Lịch</option>
-                                <option value="completed">Hoàn Thành</option>
-                                <option value="cancelled">Hủy</option>
+                            <select id="status" name="trang_thai" class="form-control">
+                                <?php 
+                                if ($trang_thai == 0) {
+                                    // Hiển thị tất cả các trạng thái
+                                    echo "<option value='0' selected>Đã Lên Lịch</option>
+                                          <option value='1'>Hoàn Thành</option>
+                                          <option value='2'>Hủy</option>";
+                                } elseif ($trang_thai == 1) {
+                                    // Ẩn trạng thái 'Đã Lên Lịch' khi trạng thái hiện tại là 1
+                                    echo "<option value='0' style='display:none;'>Đã Lên Lịch</option>
+                                          <option value='1' selected>Hoàn Thành</option>
+                                          <option value='2'>Hủy</option>";
+                                } elseif ($trang_thai == 2) {
+                                    // Chỉ hiển thị trạng thái 'Hủy' khi trạng thái hiện tại là 2
+                                    echo "<option value='0' style='display:none;'>Đã Lên Lịch</option>
+                                          <option value='1' style='display:none;'>Hoàn Thành</option>
+                                          <option value='2' selected>Hủy</option>";
+                                }
+                                
+                                ?>
                             </select>
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-primary"><?= isset($showtime) ? 'Cập Nhập' : 'Thêm Mới' ?></button>
-                        <a href="index.php?act=manageShowtimes" class="btn btn-secondary">Hủy</a>
+                        <input type="submit" class="btn btn-primary"name="up_btn" value="Cập nhập">
+                        <a href="index.php?act=showFilm" class="btn btn-secondary">Hủy</a>
                     </form>
                 </div>
             </div>

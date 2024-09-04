@@ -33,21 +33,32 @@
                                  <?php $key=1;
                                  foreach ($listAllShow as $item){
                                     extract($item);
-                                    
+                                    // var_dump($listAllShow);
                                     $editShow="index.php?act=editShowtime&idShowtime=".$id;
                                     $viewdetail="index.php?act=showtimeDetail&idShowtime=".$id;
                                     $deleteShow="index.php?act=deleteShowtime&idShowtime=".$id;
                                  ?>
+                                  <tr>
                                
-                                    <td><?= $key+1?></td>
+                                    <td><?= $key?></td>
                                     <td><?=$ten_phim?></td>
                                     <td><?=$ten_phong?></td>
                                     <td><?=$thoi_gian_bat_dau?></td>
                                     <td><?=$thoi_gian_ket_thuc?></td>
-                                    <td><?php if($trang_thai==0){
-                                        echo "Đã lên lịch";
-                                        }elseif($trang_thai==1){ echo "Hoàn thành";}
-                                        else{ echo "Hủy";}?></td>
+                                    <td><?php 
+                                        
+                                       if ($trang_thai ==0 ) {
+                                           echo "Đã lên lịch";
+                                       } elseif ($trang_thai ==1 ) {
+                                           echo "Hoàn thành";
+                                       } elseif ($trang_thai == 2) {
+                                           echo "Hủy";
+                                       } else {
+                                           echo "Trạng thái không xác định"; // Trường hợp lỗi hoặc giá trị không mong muốn
+                                       }
+                                   
+                                        ?>
+                                    </td>
                                     <td>
                                         <!-- View details link with icon -->
                                         <a href="<?=$viewdetail?>" class="btn btn-info btn-sm viewDetails" data-id="1">
@@ -65,7 +76,7 @@
                                 </tr>
                                 <?php $key++;
                                  }?>
-                                <tr>
+                               
                                 <!-- Add more rows dynamically here using JavaScript -->
                             </tbody>
                         </table>

@@ -1,6 +1,6 @@
 
 <style>
-        <style>
+        <styl>
     .product-image {
         text-align: center;
         margin-bottom: 20px; 
@@ -25,7 +25,11 @@
 }
 
 </style>
-    </style>
+    <?php if(isset($oneShow)&& is_array($oneShow)){
+        extract($oneShow);
+        $anh="../../Uploads/".$anh_bia;
+    }
+    ?>
     <!-- Begin Page Content -->
     <div class="container-fluid">
         <!-- Page Heading -->
@@ -44,21 +48,35 @@
                             <div class="col-sm-10"><?=$ten_phim?></div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Mô tả:</div>
-                            <div class="col-sm-10"> <?=$mo_ta?>
+                            <div class="col-sm-2 font-weight-bold">Phòng chiếu:</div>
+                            <div class="col-sm-10"> <?=$ten_phong?>
                             </div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Thể loại:</div>
-                            <div class="col-sm-10"><?=$ten_danh_muc?></div>
+                            <div class="col-sm-2 font-weight-bold">Thời gian chiếu bắt đầu:</div>
+                            <div class="col-sm-10"><?=$thoi_gian_bat_dau?></div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Thời lượng</div>
-                            <div class="col-sm-10"><?=$thoi_luong?></div>
+                            <div class="col-sm-2 font-weight-bold">Thời gian chiếu kết thúc:</div>
+                            <div class="col-sm-10"><?=$thoi_gian_ket_thuc?></div>
                         </div>
                         <div class="row mb-4">
-                            <div class="col-sm-2 font-weight-bold">Thời gian tạo:</div>
-                            <div class="col-sm-10"><?=$thoi_gian_tao?></div>
+                            <div class="col-sm-2 font-weight-bold">Thời gian tạo :</div>
+                            <div class="col-sm-10"><?=$ngay_tao?></div>
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-sm-2 font-weight-bold">Trạng thái :</div>
+                            <div class="col-sm-10"><?php 
+                            if ($trang_thai ==0 ) {
+                                echo "Đã lên lịch";
+                            } elseif ($trang_thai ==1 ) {
+                                echo "Hoàn thành";
+                            } elseif ($trang_thai == 2) {
+                                echo "Hủy";
+                            } else {
+                                echo "Trạng thái không xác định"; // Trường hợp lỗi hoặc giá trị không mong muốn
+                            }
+                            ?></div>
                         </div>
 
                          <!-- Column for Product Images -->
@@ -81,7 +99,7 @@
 
                         <div class="row">
                             <div class="col-sm-10 offset-sm-2">
-                                <a href="index.php?act=film" class="btn btn-secondary">Quay lại</a>
+                                <a href="index.php?act=showFilm" class="btn btn-secondary">Quay lại</a>
                             </div>
                         </div>
                     </div>

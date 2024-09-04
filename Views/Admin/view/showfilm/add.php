@@ -64,6 +64,11 @@
                                  } else {
                                     $erTimesfirst = "";
                             } ?></span>
+                            <span style="color:red;"><?php if (isset($erTime)) {
+                                 echo $erTime;
+                                 } else {
+                                    $erTime = "";
+                            } ?></span>
                         </div>
 
                         <!-- Thời gian kết thúc -->
@@ -74,6 +79,11 @@
                                  echo $erTimesend;
                                  } else {
                                     $erTimesend = "";
+                            } ?></span>
+                            <span style="color:red;"><?php if (isset($erTime)) {
+                                 echo $erTime;
+                                 } else {
+                                    $erTime = "";
                             } ?></span>
                         </div>
 
