@@ -469,19 +469,19 @@ if (isset($_GET['act'])) {
             require_once './view/account/fix.php';
             break;
         case 'showFilm':
-            $listAllShow=getShows();
+            $listAllShow = getShows();
             require_once './view/showFilm/list.php';
             break;
         case 'addShowFilm':
             $phim = getFilm();
             $data = getRoom();
-            
+
             $erCount = 0;
-            if(isset($_POST['add_btn'])&& $_POST['add_btn']){
-                $id_phim = $_POST['id_phim']; 
-                $id_phong = $_POST['id_phong']; 
-                $thoi_gian_bat_dau = $_POST['thoi_gian_bat_dau']; 
-                $thoi_gian_ket_thuc = $_POST['thoi_gian_ket_thuc']; 
+            if (isset($_POST['add_btn']) && $_POST['add_btn']) {
+                $id_phim = $_POST['id_phim'];
+                $id_phong = $_POST['id_phong'];
+                $thoi_gian_bat_dau = $_POST['thoi_gian_bat_dau'];
+                $thoi_gian_ket_thuc = $_POST['thoi_gian_ket_thuc'];
                 $trang_thai = 0;
                 $ngay_tao = date("Y-m-d H:i:s");
 
@@ -492,7 +492,7 @@ if (isset($_GET['act'])) {
                 if (!empty($thoi_gian_ket_thuc)) {
                     $thoi_gian_ket_thuc = date("Y-m-d H:i:s", strtotime($thoi_gian_ket_thuc));
                 }
-                
+
                 #validate
                 if (empty($id_phim)) {
                     $erPhim = "Không được để trống tên phim";
@@ -511,74 +511,75 @@ if (isset($_GET['act'])) {
                     $erTimesend = "Không được để trống thời gian";
                     $erCount++;
                 }
-                if($thoi_gian_bat_dau <= $thoi_gian_ket_thuc && $thoi_gian_ket_thuc >= $thoi_gian_bat_dau){
+                if ($thoi_gian_bat_dau >= $thoi_gian_ket_thuc) {
                     $erTime = "Thời gian nhập vào không phù hợp";
                     $erCount++;
                 }
                 if ($erCount == 0) {
-                    $check=ckeckTime($id_phim,$id_phong,$thoi_gian_bat_dau, $thoi_gian_ket_thuc);
+                    $check = ckeckTime($id_phim, $id_phong, $thoi_gian_bat_dau, $thoi_gian_ket_thuc);
 
-                    if($check){
+                    if ($check) {
                         echo "<script>
                         alert('Thêm không thành công!');
                         window.location.href = 'index.php?act=addShowFilm';
                         </script>";
-                    exit(); 
-                    }else{
-                    insertShows($id_phim,$id_phong,$thoi_gian_bat_dau, $thoi_gian_ket_thuc, $trang_thai,$ngay_tao);
-                    echo "<script>
+                        exit();
+                    } else {
+                        insertShows($id_phim, $id_phong, $thoi_gian_bat_dau, $thoi_gian_ket_thuc, $trang_thai, $ngay_tao);
+                        echo "<script>
                         alert('Thêm thành công!');
                         window.location.href = 'index.php?act=showFilm';
                         </script>";
-                    exit();
-                    echo $thong_bao="Thêm thành công.";
+                        exit();
+
+                    }
                 }
-             }
 
             }
-            
+
             require_once './view/showFilm/add.php';
             break;
         case 'showtimeDetail':
-            if(isset($_GET['idShowtime'])&& $_GET['idShowtime']){
-                $id=$_GET['idShowtime'];
-                $oneShow=getOneShows($id);
+            if (isset($_GET['idShowtime']) && $_GET['idShowtime']) {
+                $id = $_GET['idShowtime'];
+                $oneShow = getOneShows($id);
             }
-            
+
             require_once './view/showFilm/showtimeDetail.php';
 
             break;
         case 'deleteShowtime':
-            if(isset($_GET['idShowtime'])&& $_GET['idShowtime']){
-                $id=$_GET['idShowtime'];
+            if (isset($_GET['idShowtime']) && $_GET['idShowtime']) {
+                $id = $_GET['idShowtime'];
                 deleteShows($id);
             }
-            $listAllShow=getShows();
+            $listAllShow = getShows();
             require_once './view/showFilm/list.php';
 
             break;
         case 'editShowtime':
-            if(isset($_GET['idShowtime'])&& $_GET['idShowtime']){
-                $id=$_GET['idShowtime'];
-                $oneShows=getOneShows($id);
-            }
             $phim = getFilm();
             $data = getRoom();
+            if (isset($_GET['idShowtime']) && $_GET['idShowtime']) {
+                $id = $_GET['idShowtime'];
+                $oneShows = getOneShows($id);
+            }
+
             require_once './view/showFilm/fix.php';
             break;
         case 'updateShowtime':
             $phim = getFilm();
             $data = getRoom();
-            
+
             $erCount = 0;
-            if(isset($_POST['up_btn'])&& $_POST['up_btn']){
-                $id=$_POST['id'];
-                $id_phim = $_POST['id_phim']; 
-                $id_phong = $_POST['id_phong']; 
-                $thoi_gian_bat_dau = $_POST['thoi_gian_bat_dau']; 
-                $thoi_gian_ket_thuc = $_POST['thoi_gian_ket_thuc']; 
+            if (isset($_POST['up_btn']) && $_POST['up_btn']) {
+                $id = $_POST['id'];
+                $id_phim = $_POST['id_phim'];
+                $id_phong = $_POST['id_phong'];
+                $thoi_gian_bat_dau = $_POST['thoi_gian_bat_dau'];
+                $thoi_gian_ket_thuc = $_POST['thoi_gian_ket_thuc'];
                 $trang_thai = $_POST['trang_thai'];
-                
+
 
                 // Định dạng lại thời gian cho phù hợp với kiểu DATETIME của SQL
                 if (!empty($thoi_gian_bat_dau)) {
@@ -606,39 +607,25 @@ if (isset($_GET['act'])) {
                     $erTimesend = "Không được để trống thời gian";
                     $erCount++;
                 }
-                
+
                 if ($erCount == 0) {
-                    // if($check==false){
-                    //     echo "<script>
-                    //     alert('Cập nhập không thành công!');
-                    //     window.location.href = 'index.php?act=updateShowtime';
-                    //     </script>";
-                    // exit();
-                    // }else{
-                        updateShows($id,$id_phim,$id_phong,$thoi_gian_bat_dau, $thoi_gian_ket_thuc, $trang_thai);
+                    updateShows($id, $id_phim, $id_phong, $thoi_gian_bat_dau, $thoi_gian_ket_thuc, $trang_thai);
                     echo "<script>
                         alert('Cập nhập thành công!');
                         window.location.href = 'index.php?act=showFilm';
                         </script>";
                     exit();
-                    echo $thong_bao="Thêm thành công.";
-                    // }
-
-                    
                 }
-
-
             }
             require_once './view/showFilm/fix.php';
-
             break;
         case 'trashCanShowFilm':
             # code...
-            $listDelete=getTrashShows();
+            $listDelete = getTrashShows();
             require_once './view/showFilm/listDelete.php';
 
             break;
-        
+
         case 'ticket':
             require_once './view/ticket/list.php';
             break;

@@ -15,7 +15,7 @@ function getShows(){
     return $list;
 }
 function getOneShows($id){
-    $sql = "SELECT showtimes.*, phim.ten_phim,phim.anh_bia, phongchieu.ten_phong
+    $sql = "SELECT showtimes.*,showtimes.trang_thai as trang_thai_show, phim.ten_phim,phim.anh_bia, phongchieu.ten_phong
         FROM showtimes
         JOIN phim ON phim.id_phim = showtimes.id_phim
         JOIN phongchieu ON phongchieu.id_phong = showtimes.id_phong
