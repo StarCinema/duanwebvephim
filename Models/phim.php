@@ -6,10 +6,28 @@ function  insertFiml($ten_phim ,$mo_ta ,$thoi_gian,$danh_muc ,$img_name,$thoi_gi
 }
 #show phim
 function getFilm(){
-    $sql = "SELECT danhmuc.ten_danh_muc , phim.* FROM phim
+    $sql = "SELECT danhmuc.ten_danh_muc ,danhmuc.id_danh_muc, phim.* FROM phim
     INNER JOIN danhmuc ON danhmuc.id_danh_muc = phim.id_danh_muc
     where danhmuc.trang_thai=0 and phim.trang_thai=0
     ORDER BY id_phim DESC";
+    $data = pdo_query($sql);
+    return $data;
+}
+
+#show phim theo id loại
+function getFilmId($id_danh_muc){
+    if($id_danh_muc !== 0){
+        $sql = "SELECT danhmuc.ten_danh_muc ,danhmuc.id_danh_muc, phim.* FROM phim
+        INNER JOIN danhmuc ON danhmuc.id_danh_muc = phim.id_danh_muc
+        where danhmuc.trang_thai=0 and phim.trang_thai=0
+        and danhmuc.id_danh_muc = '$id_danh_muc'";
+    }else {
+        $sql = "SELECT danhmuc.ten_danh_muc ,danhmuc.id_danh_muc, phim.* FROM phim
+        INNER JOIN danhmuc ON danhmuc.id_danh_muc = phim.id_danh_muc
+        where danhmuc.trang_thai=0 and phim.trang_thai=0
+        ORDER BY id_phim DESC";
+    }
+
     $data = pdo_query($sql);
     return $data;
 }

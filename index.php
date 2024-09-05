@@ -2,10 +2,10 @@
 session_start();
 ob_start();
 require_once './Models/pdo.php';
-require_once './Views/header.php';
 require_once './Models/taikhoan.php';
 require_once './Models/phim.php';
 require_once './Models/danhmuc.php';
+require_once './Views/header.php';
 # Xử lý Swich case.
 if (isset($_GET['act'])) {
     $act = $_GET['act'];
@@ -115,11 +115,15 @@ if (isset($_GET['act'])) {
                 exit();
             }
             break;
-        case 'genre':
-            # loại phim
-            break;
         case 'film':
-            # phim
+            if(isset($_GET['id_danhmuc'])){
+                $id_danh_muc = $_GET['id_danhmuc'];
+            }else {
+                $id_danh_muc =0;
+            }
+            
+            $list_film =  getFilmId($id_danh_muc);
+            require_once './Views/User/phim.php';
             break;
         case 'showTimes':
             # lịch chiếu
