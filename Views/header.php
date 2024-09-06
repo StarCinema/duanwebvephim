@@ -50,11 +50,24 @@ $path = 'http://localhost/duanwebvephim';
                         <a href="index.php" class="active">Trang Chủ</a>
                     </li>
                     <li class="menu-item-has-children">
-                        <a href="">Phim</a>
+                        <?php 
+                        $loai_phim =  getdanhmuc();
+                        ?>
+                        <a href="index.php?act=film">Phim</a>
                         <ul class="submenu">
-                            <li>
-                                <a href="index.php?act=genre">Loại phim</a>
-                            </li>
+                                                    <?php 
+                            foreach ($loai_phim as $key => $loai) {
+                                // Chuyển chữ cái đầu tiên của tên danh mục thành chữ thường
+                                $ten_danh_muc = lcfirst($loai['ten_danh_muc']);
+                            ?>
+                                <li>
+                                    <a href="index.php?act=film&id_danhmuc=<?=$loai['id_danh_muc'] ?>"><?= htmlspecialchars($ten_danh_muc) ?></a>
+                               </li>
+                            <?php
+                            }
+                            ?>
+
+                            
                         </ul>
                     </li>
                     <li class="menu-item-has-children">
@@ -81,7 +94,9 @@ $path = 'http://localhost/duanwebvephim';
                             <a href="index.php?act=logIn">Đăng nhập</a>
                         </li>
                     </div>
-                    <?php} else{?>
+                    <?php
+                } 
+                else{?>
                         <div class="logIn">
                         
                     </div>
