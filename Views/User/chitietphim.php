@@ -1,3 +1,72 @@
+<style>
+    /* Ẩn ban đầu */
+    .booking-section, .overlay {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    /* Khi hiển thị */
+    .booking-section.active, .overlay.active {
+        display: block;
+        opacity: 1;
+    }
+
+    /* Overlay tối khi hiển thị booking */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 10;
+    }
+
+    .booking-section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    width: 700px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+    border-radius: 10px;
+    color: #333; /* Đặt màu chữ tối hơn */
+}
+
+.booking-section h3 {
+    color: #000; /* Đặt màu tiêu đề đậm hơn */
+}
+
+.custom-select, .form-group label {
+    color: #333; /* Màu chữ cho các label và text */
+}
+
+
+    /* Form Elements Styling */
+    .form-group {
+        width: 70%;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+/* Điều chỉnh chiều dài của select trong booking-section */
+.booking-section .custom-select {
+    width: 100%; /* Tăng chiều rộng lên 100% trong booking section */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+
+</style>
 
 <section class="details-banner bg_img" data-background="public/assets/images/banner/banner03.jpg">
     <div class="container">
@@ -95,7 +164,7 @@
                     <p><a href="#0">Rate It</a></p>
                 </div>
             </div>
-            <a href="index.php?act=bookticket" class="custom-button">Đặt vé</a>
+            <a href="javascript:void(0);" class="custom-button" id="btn-dat-ve">Đặt vé</a>
         </div>
     </div>
 </section>
@@ -219,4 +288,55 @@
         </div>
     </div>
 </section>
-<!-- ==========Movie-Section========== -->
+
+<!-- ==========Movie-Booking-Section========== -->
+<div class="overlay" id="overlay"></div>
+<section class="booking-section" id="booking-section">
+    <div class="booking-wrapper">
+    <h3 >Lịch chiếu</h3>
+        
+        <form action="index.php?act=bookticket" method="post">
+            <!-- Chọn ngày chiếu -->
+            <div class="form-group">
+                <label for="ngay_chieu">Chọn ngày chiếu</label>
+                <select name="ngay_chieu" id="ngay_chieu" class="custom-select">
+                    <option value="">Chọn ngày</option>
+                    <option value="2024-09-10">10/09/2024</option>
+                    <option value="2024-09-11">11/09/2024</option>
+                    <option value="2024-09-12">12/09/2024</option>
+                </select>
+            </div>
+
+            <!-- Chọn phòng chiếu -->
+            <div class="form-group">
+                <label for="phong_chieu">Chọn phòng chiếu</label>
+                <select name="phong_chieu" id="phong_chieu" class="custom-select">
+                    <option value="">Chọn phòng</option>
+                    <option value="1">Phòng 1</option>
+                    <option value="2">Phòng 2</option>
+                    <option value="3">Phòng 3</option>
+                </select>
+            </div>
+
+            <!-- Chọn xuất chiếu -->
+            <button id="view-showtime" class="custom-button" disabled>Xem xuất chiếu</button>
+
+
+        </form>
+    </div>
+</section>
+
+
+<!-- JavaScript -->
+<script>
+    document.getElementById('btn-dat-ve').addEventListener('click', function() {
+        document.getElementById('booking-section').classList.add('active');
+        document.getElementById('overlay').classList.add('active');
+    });
+
+    // Đóng khi click ngoài overlay
+    document.getElementById('overlay').addEventListener('click', function() {
+        document.getElementById('booking-section').classList.remove('active');
+        document.getElementById('overlay').classList.remove('active');
+    });
+</script>
