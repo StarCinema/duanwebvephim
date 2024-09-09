@@ -30,12 +30,17 @@
                     <h3 class="title">Thể Loại</h3>
                     <div class="widget-1-body">
                         <ul>
-
-                            <li>
-                                <h6 class="sub-title">
-                                    <a href="filmByGenre">name</a>
-                                </h6>
-                            </li>
+                        <?php 
+                            foreach ($loai_phim as $key => $loai) {
+                                // Chuyển chữ cái đầu tiên của tên danh mục thành chữ thường
+                                $ten_danh_muc = lcfirst($loai['ten_danh_muc']);
+                            ?>
+                                <li>
+                                    <a href="index.php?act=film&id_danhmuc=<?=$loai['id_danh_muc'] ?>"><?= htmlspecialchars($ten_danh_muc) ?></a>
+                               </li>
+                            <?php
+                            }
+                            ?>
 
 
 
