@@ -1,6 +1,6 @@
 
 <style>
-        <styl>
+        
     .product-image {
         text-align: center;
         margin-bottom: 20px; 

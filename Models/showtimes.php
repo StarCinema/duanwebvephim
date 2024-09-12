@@ -9,7 +9,7 @@ function getShows(){
         FROM showtimes
         JOIN phim ON phim.id_phim = showtimes.id_phim
         JOIN phongchieu ON phongchieu.id_phong = showtimes.id_phong
-        where showtimes.trang_thai=0 or showtimes.trang_thai=1
+        where showtimes.trang_thai=0 or showtimes.trang_thai=1 or showtimes.trang_thai=2
         order by id desc";
     $list=pdo_query($sql);
     return $list;
@@ -25,7 +25,7 @@ function getOneShows($id){
     return $list;
 }
 function deleteShows($id){
-    $sql="update showtimes set trang_thai=2 where id='$id'";
+    $sql="update showtimes set trang_thai=3 where id='$id'";
     pdo_execute($sql);
 }
 function getTrashShows(){
@@ -33,7 +33,7 @@ function getTrashShows(){
         FROM showtimes
         JOIN phim ON phim.id_phim = showtimes.id_phim
         JOIN phongchieu ON phongchieu.id_phong = showtimes.id_phong
-        where showtimes.trang_thai=2 ";
+        where showtimes.trang_thai=3 ";
     $list=pdo_query($sql);
     return $list;
 }

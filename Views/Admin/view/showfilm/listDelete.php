@@ -52,7 +52,10 @@
                                            echo "Hoàn thành";
                                        } elseif ($trang_thai == 2) {
                                            echo "Hủy";
-                                       } else {
+                                       } elseif ($trang_thai == 3) {
+                                        echo "Đã xóa";
+                                        }
+                                        else {
                                            echo "Trạng thái không xác định"; // Trường hợp lỗi hoặc giá trị không mong muốn
                                        }
                                    
